@@ -1,4 +1,5 @@
-require "fog/exoscale/version"
+require 'fog/exoscale/version'
+require 'fog/exoscale/compute'
 
 module Fog
   module Exoscale
