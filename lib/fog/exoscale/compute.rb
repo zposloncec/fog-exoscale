@@ -1,19 +1,21 @@
-require 'fog/exoscale/core'
-require 'digest/md5'
+require "fog/exoscale/core"
+require "digest/md5"
 
 module Fog
   module Compute
     class Exoscale < Fog::Service
-
+      
+      class MissingRequiredParameter < Fog::Errors::Error; end
       class BadRequest < Fog::Compute::Exoscale::Error; end
       class Unauthorized < Fog::Compute::Exoscale::Error; end
     
-      recognizes :exoscale_api_key, :exoscale_secret_access_key, :exoscale_session_key, :exoscale_session_id, :exoscale_persistent
-      
-      request_path 'fog/exoscale/requests/compute'
+      recognizes :exoscale_api_key, :exoscale_secret_access_key 
+      recognizes :exoscale_session_key, :exoscale_session_id, :exoscale_persistent
+      requires :exoscale_api_key, :exoscale_secret_access_key
 
+      request_path "fog/exoscale/requests/compute"
 
-      model_path 'fog/exoscale/models/compute'
+      model_path "fog/exoscale/models/compute"
       
       model :address
 
@@ -91,10 +93,10 @@ module Fog
           @exoscale_secret_access_key   = options[:exoscale_secret_access_key]
           @exoscale_session_id          = options[:exoscale_session_id]
           @exoscale_session_key         = options[:exoscale_session_key]
-          @host                         = 'api.exoscale.ch'
-          @path                         = '/compute'
+          @host                         = "api.exoscale.ch"
+          @path                         = "/compute"
           @port                         = 443
-          @scheme                       = 'https'
+          @scheme                       = "https"
           @connection = Fog::XML::Connection.new("#{@scheme}://#{@host}:#{@port}#{@path}", options[:exoscale_persistent], {:ssl_verify_peer => false})
         end
 
@@ -104,25 +106,25 @@ module Fog
 
         def login(username,password,domain)
           response = issue_request({
-            'response' => 'json',
-            'command'  => 'login',
-            'username' => username,
-            'password' => Digest::MD5.hexdigest(password),
-            'domain'   => domain
+            "response" => "json",
+            "command"  => "login",
+            "username" => username,
+            "password" => Digest::MD5.hexdigest(password),
+            "domain"   => domain
           })
 
           # Parse response cookies to retrive JSESSIONID token
-          cookies   = CGI::Cookie.parse(response.headers['Set-Cookie'])
-          sessionid = cookies['JSESSIONID'].first
+          cookies   = CGI::Cookie.parse(response.headers["Set-Cookie"])
+          sessionid = cookies["JSESSIONID"].first
 
           # Decode the login response
           response   = Fog::JSON.decode(response.body)
 
-          user = response['loginresponse']
-          user.merge!('sessionid' => sessionid)
+          user = response["loginresponse"]
+          user.merge!("sessionid" => sessionid)
 
-          @exoscale_session_id  = user['sessionid']
-          @exoscale_session_key = user['sessionkey']
+          @exoscale_session_id  = user["sessionid"]
+          @exoscale_session_key = user["sessionkey"]
 
           user
         end
@@ -130,7 +132,7 @@ module Fog
         def request(params)
           params.reject!{|k,v| v.nil?}
 
-          params.merge!('response' => 'json')
+          params.merge!("response" => "json")
 
           if has_session?
             params, headers = authorize_session(params)
@@ -154,9 +156,9 @@ module Fog
 
         def authorize_session(params)
           # set the session id cookie for the request
-          headers = {'Cookie' => "JSESSIONID=#{@exoscale_session_id};"}
+          headers = {"Cookie" => "JSESSIONID=#{@exoscale_session_id};"}
           # set the sesion key for the request, params are not signed using session auth
-          params.merge!('sessionkey' => @exoscale_session_key)
+          params.merge!("sessionkey" => @exoscale_session_key)
 
           return params, headers
         end
@@ -164,16 +166,16 @@ module Fog
         def authorize_api_keys(params)
           headers = {}
           # merge the api key into the params
-          params.merge!('apiKey' => @exoscale_api_key)
+          params.merge!("apiKey" => @exoscale_api_key)
           # sign the request parameters
           signature = Fog::Exoscale.signed_params(@exoscale_secret_access_key,params)
           # merge signature into request param
-          params.merge!({'signature' => signature})
+          params.merge!({"signature" => signature})
 
           return params, headers
         end
 
-        def issue_request(params={},headers={},method='GET',expects=200)
+        def issue_request(params={},headers={},method="GET",expects=200)
           begin
             @connection.request({
               :query => params,
@@ -185,8 +187,8 @@ module Fog
           rescue Excon::Errors::HTTPStatusError => error
             error_response = Fog::JSON.decode(error.response.body)
 
-            error_code = error_response.values.first['errorcode']
-            error_text = error_response.values.first['errortext']
+            error_code = error_response.values.first["errorcode"]
+            error_text = error_response.values.first["errortext"]
 
             case error_code
             when 401
@@ -384,7 +386,7 @@ module Fog
                   "size"=>17179869184,
                   "created"=>"2013-04-16T12:33:41+0000",
                   "state"=>"Ready",
-                  "account"=> 'accountname',
+                  "account"=> "accountname",
                   "domainid"=> domain_id,
                   "domain"=> domain_name,
                   "storagetype"=>"shared",
