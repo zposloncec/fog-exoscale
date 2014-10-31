@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'fog/exoscale'
+
 Shindo.tests('Exoscale | escape', ['Exoscale']) do
   returns( Fog::Exoscale.escape( "'Stöp!' said Fred_-~." ) ) { "%27St%C3%B6p%21%27%20said%20Fred_-%7E." }
 end

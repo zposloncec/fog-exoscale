@@ -28,6 +28,4 @@ end
 
 require File.join(File.dirname(__FILE__), '../lib/fog/exoscale.rb')
 
-if ENV['COVERAGE']
-  Coveralls.wear!
-end
+Coveralls.wear! if ENV['COVERAGE']
