@@ -5,8 +5,8 @@ describe Fog::Compute::Exoscale do
   describe 'when global config is available' do
     before do
       @config = {
-        exoscale_api_key: 'bogus_api_key',
-        exoscale_secret_access_key: 'bogus_secret_access_key'
+        :exoscale_api_key           => 'bogus_api_key',
+        :exoscale_secret_access_key => 'bogus_secret_access_key'
       }
 
       @service = Fog::Compute::Exoscale.new(@config)

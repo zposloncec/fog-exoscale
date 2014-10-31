@@ -4,8 +4,8 @@ require "fog/exoscale"
 describe Fog::Compute::Exoscale do
   before do
     @config = {
-      exoscale_api_key: "GNo98yPx8tN_TJbGMVnv7pwM5iOeBbsv7iiM6L11FuXzYCSVSIJItOgPC4oTJkqwyLRp9jkADLVvRYkP2O3QLQ",
-      exoscale_secret_access_key: "QzCBEd9f4O8c32-8FNggQKfAk52v0txjq7OO6T7tL0aLlAt8tw0Cv_neoqLGMsg1A7cX6e3BdI2MjOLtQv6UPw"
+      :exoscale_api_key           => "GNo98yPx8tN_TJbGMVnv7pwM5iOeBbsv7iiM6L11FuXzYCSVSIJItOgPC4oTJkqwyLRp9jkADLVvRYkP2O3QLQ",
+      :exoscale_secret_access_key => "QzCBEd9f4O8c32-8FNggQKfAk52v0txjq7OO6T7tL0aLlAt8tw0Cv_neoqLGMsg1A7cX6e3BdI2MjOLtQv6UPw"
     }
     
     @client = Fog::Compute::Exoscale.new(@config)
