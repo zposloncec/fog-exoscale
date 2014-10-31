@@ -1,6 +1,7 @@
 require 'fog/core'
 require 'fog/xml'
 require 'fog/exoscale'
+require 'fog/test/helpers'
 
 provider, config = :exoscale, compute_providers[:exoscale]
 
