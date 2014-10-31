@@ -1,6 +1,7 @@
 require 'fog/core'
 require 'fog/xml'
 require 'fog/exoscale'
+require 'fog/test/compute/helper.rb'
 
 def security_group_rule_tests(connection, params, direction, mocks_implemented = true)
   @security_group = connection.security_groups.create(params[:security_group_attributes])
