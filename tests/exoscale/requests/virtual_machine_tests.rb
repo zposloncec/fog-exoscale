@@ -1,3 +1,7 @@
+require 'fog/core'
+require 'fog/xml'
+require 'fog/exoscale'
+
 Shindo.tests('Fog::Compute[:exoscale] | virtual machine requests', ['exoscale']) do
 
   @virtual_machines_format = {

@@ -1,3 +1,7 @@
+require 'fog/core'
+require 'fog/xml'
+require 'fog/exoscale'
+
 Shindo.tests('Fog::Compute[:exoscale] | template requests', ['exoscale']) do
 
   @templates_format = {

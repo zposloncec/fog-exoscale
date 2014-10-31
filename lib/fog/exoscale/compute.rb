@@ -7,18 +7,14 @@ module Fog
 
       class BadRequest < Fog::Compute::Exoscale::Error; end
       class Unauthorized < Fog::Compute::Exoscale::Error; end
-
-      #requires :exoscale_host
-
-      #recognizes :exoscale_api_key, :exoscale_secret_access_key, :exoscale_session_key, :exoscale_session_id,
-      #           :exoscale_port, :exoscale_path, :exoscale_scheme, :exoscale_persistent
-      
+    
       recognizes :exoscale_api_key, :exoscale_secret_access_key, :exoscale_session_key, :exoscale_session_id, :exoscale_persistent
       
       request_path 'fog/exoscale/requests/compute'
 
 
       model_path 'fog/exoscale/models/compute'
+      
       model :address
 
       model :flavor

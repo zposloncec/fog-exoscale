@@ -1,3 +1,7 @@
+require 'fog/core'
+require 'fog/xml'
+require 'fog/exoscale'
+
 Shindo.tests('Fog::Compute[:exoscale] | zone requests', ['exoscale']) do
 
   @zones_format = {

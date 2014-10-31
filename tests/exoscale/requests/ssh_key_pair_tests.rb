@@ -1,3 +1,7 @@
+require 'fog/core'
+require 'fog/xml'
+require 'fog/exoscale'
+
 Shindo.tests('Fog::Compute[:exoscale] | ssh key pairs requests', ['exoscale']) do
 
   @ssh_keys_format = {

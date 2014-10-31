@@ -1,3 +1,7 @@
+require 'fog/core'
+require 'fog/xml'
+require 'fog/exoscale'
+
 def security_group_tests(provider, params, mocks_implemented = true)
 	collection_tests(provider.security_groups, params, mocks_implemented) do
 

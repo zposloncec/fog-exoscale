@@ -1,3 +1,7 @@
+require 'fog/core'
+require 'fog/xml'
+require 'fog/exoscale'
+
 provider, config = :exoscale, compute_providers[:exoscale]
 
 Shindo.tests("Fog::Compute[:#{provider}] | servers + security_groups", [provider.to_s]) do

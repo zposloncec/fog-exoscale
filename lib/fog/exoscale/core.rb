@@ -4,9 +4,6 @@ require 'uri'
 
 module Fog
   module Exoscale
-    extend Fog::Provider
-
-    service(:compute, 'Compute')
 
     @@digest  = OpenSSL::Digest.new('sha1')
 
