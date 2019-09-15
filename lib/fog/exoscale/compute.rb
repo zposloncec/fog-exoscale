@@ -86,6 +86,12 @@ module Fog
       request :list_zones
       request :list_service_offerings
       
+      # Networks
+      request :list_networks
+
+      # Affinity Group
+      request :list_affinity_groups 
+      
       class Real
 
         def initialize(options={})
